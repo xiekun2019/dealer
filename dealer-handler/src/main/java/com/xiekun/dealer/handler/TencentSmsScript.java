@@ -11,6 +11,7 @@ import com.tencentcloudapi.sms.v20210111.models.SendSmsRequest;
 import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
 import com.xiekun.dealer.pojo.SmsParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,11 +26,20 @@ public class TencentSmsScript {
     /**
      * 账号相关
      */
-    private final static String SECRET_ID = "AKIDc6RelofKG82w1T3Xo3Oh0a3KQL7jJjww";
-    private final static String SECRET_KEY = "wkOuFncSAgzCGg1ED2gCYgdP2Vq0Kftt";
-    private static final String SMS_SDK_APP_ID = "1400792521";
-    private static final String TEMPLATE_ID = "1676998";
-    private static final String SIGN_NAME = "xiekun个人公众号";
+    @Value("${tencent.sms.account.secret-id}")
+    private String SECRET_ID;
+
+    @Value("${tencent.sms.account.secret-key}")
+    private String SECRET_KEY;
+
+    @Value("${tencent.sms.account.sms-sdk-app-id}")
+    private String SMS_SDK_APP_ID;
+
+    @Value("${tencent.sms.account.template-id}")
+    private String TEMPLATE_ID;
+
+    @Value("${tencent.sms.account.sign-name}")
+    private String SIGN_NAME;
 
     public String send(SmsParam smsParam) {
         try {
@@ -42,7 +52,9 @@ public class TencentSmsScript {
             ClientProfile clientProfile = new ClientProfile();
             clientProfile.setHttpProfile(httpProfile);
             SmsClient client = new SmsClient(cred, REGION, clientProfile);
-
+            /**
+            * 组装发送短信参数
+            */
             SendSmsRequest req = new SendSmsRequest();
             String[] phoneNumberSet1 = smsParam.getPhones().toArray(new String[smsParam.getPhones().size() - 1]);
             req.setPhoneNumberSet(phoneNumberSet1);
@@ -53,6 +65,9 @@ public class TencentSmsScript {
             String[] templateParamSet1 = {"6666"};
             req.setTemplateParamSet(templateParamSet1);
 
+            /**
+             * 请求，返回结果
+             */
             SendSmsResponse resp = client.SendSms(req);
             System.out.println(SendSmsResponse.toJsonString(resp));
             return SendSmsResponse.toJsonString(resp);
