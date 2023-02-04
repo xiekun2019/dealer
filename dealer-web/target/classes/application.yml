@@ -11,8 +11,16 @@ ok:
 tencent:
   sms:
     account:
-      secret-id: "AKIDiEUt30g7LK2UikaCtOdeS4e7MM7du072"
-      secret-key: "uAOVWVJsBC8qISVN5ZR9cpohV8VfhkZB"
+      secret-id: ""
+      secret-key: ""
       sign-name: "xiekun个人公众号"
       sms-sdk-app-id: "1400792521"
       template-id: "1676998"
+
+# 数据库相关的信息配置 TODO
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.222:3306/dealer?charset=UTF-8&serverTimezone=GMT%2B8
+    username: dealer
+    password: xkpass
+    driver-class-name: com.mysql.cj.jdbc.Driver
