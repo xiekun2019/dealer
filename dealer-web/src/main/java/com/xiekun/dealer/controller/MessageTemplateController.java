@@ -56,9 +56,10 @@ public class MessageTemplateController {
     @GetMapping("/query")
     public String query() {
         Iterable<MessageTemplate> all = messageTemplateDao.findAll();
-        for (MessageTemplate messageTemplate : all) {
-            return JSON.toJSONString(messageTemplate);
-        }
-        return null;
+        return all.toString();
+//        for (MessageTemplate messageTemplate : all) {
+//            return JSON.toJSONString(messageTemplate);
+//        }
+        //return null;
     }
 }
