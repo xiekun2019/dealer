@@ -1,6 +1,6 @@
 package com.xiekun.dealer.common.vo;
 
-import com.xiekun.dealer.common.constant.RespStatusEnum;
+import com.xiekun.dealer.common.enums.RespStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
