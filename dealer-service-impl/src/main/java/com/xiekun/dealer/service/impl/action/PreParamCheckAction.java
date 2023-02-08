@@ -48,12 +48,12 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
         }
 
         // 3. 过滤 receiver 大于 100 的请求
-        if (resultMessageParamList.stream().anyMatch(messageParam -> messageParam.getReceiver().split(StrUtil.COMMA).length > AustinConstant.BATCH_RECEIVER_SIZE)) {
+        if (resultMessageParamList.stream().anyMatch(messageParam ->
+                messageParam.getReceiver().split(StrUtil.COMMA).length > AustinConstant.BATCH_RECEIVER_SIZE)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.TOO_MANY_RECEIVER));
             return;
         }
 
         sendTaskModel.setMessageParamList(resultMessageParamList);
-
     }
 }

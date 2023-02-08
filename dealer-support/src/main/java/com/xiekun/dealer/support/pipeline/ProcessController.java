@@ -5,11 +5,15 @@ import cn.hutool.core.util.StrUtil;
 import com.xiekun.dealer.common.enums.RespStatusEnum;
 import com.xiekun.dealer.common.vo.BasicResultVO;
 import com.xiekun.dealer.support.exception.ProcessException;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
+@Data
 public class ProcessController {
 
     /**
