@@ -1,35 +1,31 @@
 package com.xiekun.dealer.web.controller;
 
-import com.xiekun.dealer.handler.SmsHandler;
-import com.xiekun.dealer.common.pojo.TaskInfo;
+import com.xiekun.dealer.service.domain.SendRequest;
+import com.xiekun.dealer.service.domain.SendResponse;
+import com.xiekun.dealer.service.service.SendService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 @RestController
 public class SendController {
 
 
     @Autowired
-    private SmsHandler smsHandler;
+    private SendService sendService;
 
     /**
      * 测试发送短信
-     * @param phone 手机号
+     *      * 入参完整示例：curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"code":"send","messageParam":{"receiver":"13788888888","variables":{"title":"yyyyyy","contentValue":"6666164180"}},"messageTemplateId":1}'
+     *
+     *
      * @return
      */
-    @GetMapping("/sendSms")
-    public boolean sendSms(String phone,String content,Long messageTemplateId ) {
-
-        TaskInfo taskInfo = TaskInfo.builder().receiver(new HashSet<>(Arrays.asList(phone)))
-                .content(content).messageTemplateId(messageTemplateId).build();
-
-        return smsHandler.doHandler(taskInfo);
-
-
+    @ApiOperation(value = "下发接口", notes = "多渠道多类型下发消息，目前支持邮件和短信，类型支持：验证码、通知类、营销类。")
+    @PostMapping("/send")
+    public SendResponse send(@RequestBody SendRequest sendRequest) {
+        return sendService.send(sendRequest);
     }
-
 }

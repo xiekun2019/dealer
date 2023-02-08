@@ -10,9 +10,11 @@ import com.xiekun.dealer.support.pipeline.ProcessContext;
 import com.xiekun.dealer.support.pipeline.ProcessController;
 import com.xiekun.dealer.support.pipeline.ProcessModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+@Service
 public class SendServiceImpl implements SendService {
 
     @Autowired
