@@ -61,6 +61,11 @@ public class MessageTemplate {
     private Integer templateType;
 
     /**
+     * 屏蔽类型
+     */
+    private Integer shieldType;
+
+    /**
      * 消息类型
      */
     private Integer msgType;

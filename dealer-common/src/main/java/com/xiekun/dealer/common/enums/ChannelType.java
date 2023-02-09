@@ -1,38 +1,75 @@
 package com.xiekun.dealer.common.enums;
 
+import com.xiekun.dealer.common.dto.model.ContentModel;
+import com.xiekun.dealer.common.dto.model.SmsContentModel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * 发送渠道类型枚举
+ *
+ * @author 3y
  */
+@Getter
+@ToString
+@AllArgsConstructor
 public enum ChannelType {
-    IM(10, "IM(站内信)"),
-    PUSH(20, "push(通知栏)"),
-    SMS(30, "sms(短信)"),
-    EMAIL(40, "email(邮件)"),
-    OFFICIAL_ACCOUNT(50, "OfficialAccounts(服务号)"),
-    MINI_PROGRAM(60, "miniProgram(小程序)");
+    /**
+     * sms(短信)  -- 腾讯云、云片
+     */
+    SMS(30, "sms(短信)", SmsContentModel.class, "sms"),
+    ;
 
+    /**
+     * 编码值
+     */
+    private final Integer code;
 
-    private Integer code;
-    private String description;
+    /**
+     * 描述
+     */
+    private final String description;
 
-    ChannelType(Integer code, String description) {
-        this.code = code;
-        this.description = description;
+    /**
+     * 内容模型Class
+     */
+    private final Class<? extends ContentModel> contentModelClass;
+
+    /**
+     * 英文标识
+     */
+    private final String codeEn;
+
+    /**
+     * 通过code获取class
+     *
+     * @param code
+     * @return
+     */
+    public static Class<? extends ContentModel> getChanelModelClassByCode(Integer code) {
+        ChannelType[] values = values();
+        for (ChannelType value : values) {
+            if (value.getCode().equals(code)) {
+                return value.getContentModelClass();
+            }
+        }
+        return null;
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    /**
+     * 通过code获取enum
+     *
+     * @param code
+     * @return
+     */
+    public static ChannelType getEnumByCode(Integer code) {
+        ChannelType[] values = values();
+        for (ChannelType value : values) {
+            if (value.getCode().equals(code)) {
+                return value;
+            }
+        }
+        return null;
     }
 }

@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import com.xiekun.dealer.support.dao.SmsRecordDao;
 import com.xiekun.dealer.support.domain.SmsRecord;
 import com.xiekun.dealer.common.pojo.SmsParam;
-import com.xiekun.dealer.common.pojo.TaskInfo;
 import com.xiekun.dealer.handler.script.SmsScript;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
