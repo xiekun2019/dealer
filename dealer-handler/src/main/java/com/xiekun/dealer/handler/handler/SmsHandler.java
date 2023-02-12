@@ -1,10 +1,11 @@
-package com.xiekun.dealer.handler;
+package com.xiekun.dealer.handler.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.xiekun.dealer.support.dao.SmsRecordDao;
-import com.xiekun.dealer.support.domain.SmsRecord;
+import com.xiekun.dealer.common.domain.TaskInfo;
 import com.xiekun.dealer.common.pojo.SmsParam;
 import com.xiekun.dealer.handler.script.SmsScript;
+import com.xiekun.dealer.support.dao.SmsRecordDao;
+import com.xiekun.dealer.support.domain.SmsRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class SmsHandler implements Handler {
 
         SmsParam smsParam = SmsParam.builder()
                 .phones(taskInfo.getReceiver())
-                .content(taskInfo.getContent())
+//                .content(taskInfo.getContent())
                 .messageTemplateId(taskInfo.getMessageTemplateId())
                 .supplierId(10)
                 .supplierName("腾讯云通知类消息渠道").build();
