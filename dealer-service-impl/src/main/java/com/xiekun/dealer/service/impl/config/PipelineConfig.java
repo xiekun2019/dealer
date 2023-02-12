@@ -1,6 +1,7 @@
 package com.xiekun.dealer.service.impl.config;
 
 import com.xiekun.dealer.service.enums.BusinessCode;
+import com.xiekun.dealer.service.impl.action.AfterParamCheckAction;
 import com.xiekun.dealer.service.impl.action.AssembleAction;
 import com.xiekun.dealer.service.impl.action.PreParamCheckAction;
 import com.xiekun.dealer.support.pipeline.ProcessController;
@@ -21,6 +22,10 @@ public class PipelineConfig {
 
     @Autowired
     private AssembleAction assembleAction;
+
+    @Autowired
+    private AfterParamCheckAction afterParamCheckAction;
+
     /**
      * 默认发送流程
      * 1. 前置参数校验
@@ -33,7 +38,7 @@ public class PipelineConfig {
     @Bean("defaultSendTemplate")
     public ProcessTemplate defaultSendTemplate() {
         ProcessTemplate processTemplate = new ProcessTemplate();
-        processTemplate.setProcessList(Arrays.asList(preParamCheckAction, assembleAction));
+        processTemplate.setProcessList(Arrays.asList(preParamCheckAction, assembleAction, afterParamCheckAction));
 
         return processTemplate;
     }
