@@ -1,0 +1,7 @@
+dealer:
+  kafka:
+    ip: dealer-kafka
+    port: 9092
+  mq:
+    #  choose : kafka/eventBus/rocketMq/rabbitMq, default  kafka
+    pipline: kafka

@@ -19,8 +19,40 @@ tencent:
 
 # 数据库相关的信息配置 TODO
 spring:
+  profiles:
+    active: test
+  application:
+    name: dealer
   datasource:
     url: jdbc:mysql://192.168.1.222:3306/dealer?charset=UTF-8&serverTimezone=GMT%2B8
     username: dealer
     password: xkpass
     driver-class-name: com.mysql.cj.jdbc.Driver
+  # KAFKA 相关配置
+  kafka:
+    bootstrap-servers: ${dealer.kafka.ip}:${dealer.kafka.port}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      auto-commit-interval: 1000
+      enable-auto-commit: true
+
+dealer:
+  business:
+    topic:
+      name: austinBusiness
+    recall:
+      topic:
+        name: austinRecall
+      group:
+        name: recallGroupId
+    log:
+      topic:
+        name: austinTraceLog
+    tagId:
+      key: kafka_tag_id
+      value: com.xiekun.dealer
