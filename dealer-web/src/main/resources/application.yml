@@ -24,7 +24,7 @@ spring:
   application:
     name: dealer
   datasource:
-    url: jdbc:mysql://192.168.1.222:3306/dealer?charset=UTF-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://192.168.2.222:3306/dealer?charset=UTF-8&serverTimezone=GMT%2B8
     username: dealer
     password: xkpass
     driver-class-name: com.mysql.cj.jdbc.Driver

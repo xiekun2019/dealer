@@ -4,6 +4,7 @@ import com.xiekun.dealer.service.enums.BusinessCode;
 import com.xiekun.dealer.service.impl.action.AfterParamCheckAction;
 import com.xiekun.dealer.service.impl.action.AssembleAction;
 import com.xiekun.dealer.service.impl.action.PreParamCheckAction;
+import com.xiekun.dealer.service.impl.action.SendMqAction;
 import com.xiekun.dealer.support.pipeline.ProcessController;
 import com.xiekun.dealer.support.pipeline.ProcessTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class PipelineConfig {
     @Autowired
     private AfterParamCheckAction afterParamCheckAction;
 
+    @Autowired
+    private SendMqAction sendMqAction;
+
     /**
      * 默认发送流程
      * 1. 前置参数校验
@@ -38,7 +42,7 @@ public class PipelineConfig {
     @Bean("defaultSendTemplate")
     public ProcessTemplate defaultSendTemplate() {
         ProcessTemplate processTemplate = new ProcessTemplate();
-        processTemplate.setProcessList(Arrays.asList(preParamCheckAction, assembleAction, afterParamCheckAction));
+        processTemplate.setProcessList(Arrays.asList(preParamCheckAction, assembleAction, afterParamCheckAction, sendMqAction));
 
         return processTemplate;
     }
