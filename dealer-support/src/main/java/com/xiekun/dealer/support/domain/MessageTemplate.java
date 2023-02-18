@@ -22,7 +22,7 @@ import javax.persistence.Id;
 public class MessageTemplate {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -46,6 +46,21 @@ public class MessageTemplate {
     private Integer msgStatus;
 
     /**
+     * 定时任务Id (xxl-job-admin返回)
+     */
+    private Long cronTaskId;
+
+    /**
+     * 定时发送人群的文件路径
+     */
+    private String cronCrowdPath;
+
+    /**
+     * 期望发送时间：0:立即发送，定时任务以及周期任务:cron表达式
+     */
+    private String expectPushTime;
+
+    /**
      * 发送的Id类型
      */
     private Integer idType;
@@ -60,10 +75,6 @@ public class MessageTemplate {
      */
     private Integer templateType;
 
-    /**
-     * 屏蔽类型
-     */
-    private Integer shieldType;
 
     /**
      * 消息类型
@@ -71,11 +82,9 @@ public class MessageTemplate {
     private Integer msgType;
 
     /**
-     * 推送消息的时间
-     * 0：立即发送
-     * else：crontab 表达式
+     * 屏蔽类型
      */
-    private String expectPushTime;
+    private Integer shieldType;
 
     /**
      * 消息内容  {$var} 为占位符
@@ -125,21 +134,7 @@ public class MessageTemplate {
     private Integer created;
 
     /**
-     * 更新时间 单位s
+     * 更新时间 单位 s
      */
     private Integer updated;
-
-    /**
-     * 消息去重时间 单位小时
-     */
-    private Integer deduplicationTime;
-
-    /**
-     * 是否夜间屏蔽
-     * 0:不屏蔽
-     * 1：屏蔽
-     */
-    private Integer isNightShield;
-
-
 }
