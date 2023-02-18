@@ -14,7 +14,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -31,7 +30,7 @@ public class KafkaSendMqServiceImpl implements SendMqService {
     @Override
     public void send(String topic, String jsonValue, String tagId) {
         if (StrUtil.isNotBlank(tagId)) {
-            List<Header> headers = Arrays.asList(new RecordHeader(tagIdKey, tagId.getBytes(StandardCharsets.UTF_8)));
+            List<Header> headers = List.of(new RecordHeader(tagIdKey, tagId.getBytes(StandardCharsets.UTF_8)));
             kafkaTemplate.send(new ProducerRecord(topic, null, null, null, jsonValue, headers));
         } else {
             kafkaTemplate.send(topic, jsonValue);
