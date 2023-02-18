@@ -28,15 +28,15 @@ public class SendMqAction implements BusinessProcess<SendTaskModel> {
     @Autowired
     private SendMqService sendMqService;
 
-    @Value("${austin.business.topic.name}")
+    @Value("${dealer.business.topic.name}")
     private String sendMessageTopic;
 
-    @Value("${austin.business.recall.topic.name}")
+    @Value("${dealer.business.recall.topic.name}")
     private String austinRecall;
-    @Value("${austin.business.tagId.value}")
+    @Value("${dealer.business.tagId.value}")
     private String tagId;
 
-    @Value("${austin.mq.pipeline}")
+    @Value("${dealer.mq.pipeline}")
     private String mqPipeline;
 
 
