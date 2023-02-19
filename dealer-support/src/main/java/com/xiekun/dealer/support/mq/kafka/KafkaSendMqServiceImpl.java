@@ -22,7 +22,7 @@ import java.util.List;
 public class KafkaSendMqServiceImpl implements SendMqService {
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     @Value("${dealer.business.tagId.key}")
     private String tagIdKey;
@@ -31,7 +31,8 @@ public class KafkaSendMqServiceImpl implements SendMqService {
     public void send(String topic, String jsonValue, String tagId) {
         if (StrUtil.isNotBlank(tagId)) {
             List<Header> headers = List.of(new RecordHeader(tagIdKey, tagId.getBytes(StandardCharsets.UTF_8)));
-            kafkaTemplate.send(new ProducerRecord(topic, null, null, null, jsonValue, headers));
+            kafkaTemplate.send(new ProducerRecord<>(topic, null, null, null,
+                    jsonValue, headers));
         } else {
             kafkaTemplate.send(topic, jsonValue);
         }
