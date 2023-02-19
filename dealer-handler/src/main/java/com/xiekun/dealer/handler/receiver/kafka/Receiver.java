@@ -27,14 +27,13 @@ public class Receiver {
 
     // 消费监听
     @KafkaListener(topics = "#{'${dealer.business.topic.name}'}")
-    public void listen1(ConsumerRecord<?, String> consumerRecord, @Header(KafkaHeaders.GROUP_ID) String topicGroupId) {
-        System.out.println("消费：" + consumerRecord);
+    public void consumer(ConsumerRecord<?, String> consumerRecord, @Header(KafkaHeaders.GROUP_ID) String topicGroupId) {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if(kafkaMessage.isPresent()) {
             List<TaskInfo> taskInfoList = JSON.parseArray(kafkaMessage.get(), TaskInfo.class);
             TaskInfo firstTaskInfo = CollUtil.getFirst(taskInfoList.iterator());
             String messageGroupId = GroupIdMappingUtils.getGroupIdByTaskInfo(firstTaskInfo);
-            // 每个消费者组只消费对应的消息，
+            // 每个消费者组只消费对应的消息
             if(topicGroupId.equals(messageGroupId)) {
                 consumeService.consume2Send(taskInfoList);
             }
