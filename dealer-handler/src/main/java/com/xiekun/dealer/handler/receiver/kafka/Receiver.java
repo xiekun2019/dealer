@@ -9,7 +9,9 @@ import com.xiekun.dealer.support.constant.MessageQueuePipeline;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE) // 多例
 @ConditionalOnProperty(name = "dealer.mq.pipeline", havingValue = MessageQueuePipeline.KAFKA)
 public class Receiver {
     @Autowired
