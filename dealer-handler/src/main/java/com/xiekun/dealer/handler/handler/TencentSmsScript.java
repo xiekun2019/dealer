@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 发送短信接入文档：https://cloud.tencent.com/document/api/382/55981
+ */
 @Service
 @Slf4j
 public class TencentSmsScript implements SmsScript {
