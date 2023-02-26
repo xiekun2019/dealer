@@ -29,6 +29,8 @@ public abstract class BaseHandler implements Handler {
     public void doHandler(TaskInfo taskInfo) {
         if (handler(taskInfo)) {
             log.info("send success!");
+        } else {
+            log.info("send failed!");
         }
     }
 
