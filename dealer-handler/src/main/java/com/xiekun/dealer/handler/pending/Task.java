@@ -3,6 +3,7 @@ package com.xiekun.dealer.handler.pending;
 import cn.hutool.core.collection.CollUtil;
 import com.xiekun.dealer.common.domain.TaskInfo;
 import com.xiekun.dealer.handler.handler.HandlerHolder;
+import com.xiekun.dealer.handler.handler.deduplication.DeduplicationRuleService;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class Task implements Runnable {
     @Autowired
     private HandlerHolder handlerHolder;
 
+    @Autowired
+    private DeduplicationRuleService deduplicationRuleService;
+
     private TaskInfo taskInfo;
 
     @Override
@@ -34,7 +38,7 @@ public class Task implements Runnable {
             return;
         }
         // TODO 消息去重
-
+        deduplicationRuleService.duplication(taskInfo);
 
         // TODO 发送消息
         Integer sendChannel = taskInfo.getSendChannel();

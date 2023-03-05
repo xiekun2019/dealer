@@ -2,7 +2,9 @@ package com.xiekun.dealer.handler.handler.deduplication.service;
 
 import cn.hutool.core.util.StrUtil;
 import com.xiekun.dealer.common.domain.TaskInfo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FrequencyDeduplicationService extends AbstractDeduplicationService {
 
     private static final String PREFIX = "FRE";

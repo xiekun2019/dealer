@@ -63,3 +63,9 @@ dealer:
       key: kafka_tag_id
       value: com.xiekun.dealer
 
+# 去重配置：
+# num 表示一天内最多收多少次同一个发送渠道的消息
+# time 表示在 time 时间内只能收到一次消息
+deduplicationRule:
+  num: 5
+  time: 300

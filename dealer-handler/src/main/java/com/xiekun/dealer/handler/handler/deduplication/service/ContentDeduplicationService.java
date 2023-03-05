@@ -3,7 +3,9 @@ package com.xiekun.dealer.handler.handler.deduplication.service;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.xiekun.dealer.common.domain.TaskInfo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ContentDeduplicationService extends AbstractDeduplicationService {
 
     /**
