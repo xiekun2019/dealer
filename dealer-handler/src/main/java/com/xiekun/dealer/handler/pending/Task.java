@@ -25,10 +25,20 @@ public class Task implements Runnable {
 
     @Override
     public void run() {
-        // 发送消息
-        if (CollUtil.isNotEmpty(taskInfo.getReceiver())) {
-            Integer sendChannel = taskInfo.getSendChannel();
-            handlerHolder.route(sendChannel).doHandler(taskInfo);
+        // TODO 丢弃消息
+
+        // TODO 屏蔽消息
+
+        // 接受者为空直接返回
+        if (CollUtil.isEmpty(taskInfo.getReceiver())) {
+            return;
         }
+        // TODO 消息去重
+
+
+        // TODO 发送消息
+        Integer sendChannel = taskInfo.getSendChannel();
+        handlerHolder.route(sendChannel).doHandler(taskInfo);
+
     }
 }
