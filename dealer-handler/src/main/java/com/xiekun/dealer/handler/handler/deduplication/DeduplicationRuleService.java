@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DeduplicationRuleService {
-    @Value("deduplicationRule.num")
-    private int num;
+    @Value("${deduplicationRule.num}")
+    private String num;
 
-    @Value("deduplicationRule.time")
-    private Long time;
+    @Value("${deduplicationRule.time}")
+    private String time;
 
     @Autowired
     private ContentDeduplicationService contentDeduplicationService;
@@ -24,8 +24,8 @@ public class DeduplicationRuleService {
     public void duplication(TaskInfo taskInfo) {
         // 构造 DeduplicationParam 对象
         DeduplicationParam param = new DeduplicationParam();
-        param.setDeduplicationTime(time);
-        param.setCountNum(num);
+        param.setDeduplicationTime(Long.valueOf(time));
+        param.setCountNum(Integer.parseInt(num));
         param.setTaskInfo(taskInfo);
         // 分别去重
         contentDeduplicationService.deduplication(param);
