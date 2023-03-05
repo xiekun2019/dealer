@@ -11,7 +11,7 @@ public class ContentDeduplicationService extends AbstractDeduplicationService {
      * <p>
      * key：md5(templateId + receiver + content)
      * <p>
-     * 相同的内容相同的模板，在短时间内只发给同一个人
+     * 相同的内容、相同的模板，在短时间内发给同一个接收者
      */
     @Override
     public String deduplicationSingleKey(TaskInfo taskInfo, String receiver) {
