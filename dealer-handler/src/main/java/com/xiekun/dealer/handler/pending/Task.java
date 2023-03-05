@@ -35,14 +35,14 @@ public class Task implements Runnable {
 
         // 接受者为空直接返回
         if (CollUtil.isEmpty(taskInfo.getReceiver())) {
-            return;
+            // TODO 消息去重
+            deduplicationRuleService.duplication(taskInfo);
         }
-        // TODO 消息去重
-        deduplicationRuleService.duplication(taskInfo);
 
-        // TODO 发送消息
-        Integer sendChannel = taskInfo.getSendChannel();
-        handlerHolder.route(sendChannel).doHandler(taskInfo);
-
+        if (CollUtil.isEmpty(taskInfo.getReceiver())) {
+            // TODO 发送消息
+            Integer sendChannel = taskInfo.getSendChannel();
+            handlerHolder.route(sendChannel).doHandler(taskInfo);
+        }
     }
 }

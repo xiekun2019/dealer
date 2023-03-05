@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public abstract class AbstractDeduplicationService implements DeduplicationService {
@@ -26,7 +27,8 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
 
         // 获取 redis 记录
         Map<String, String> readyToPutRedisReceiver = new HashMap<>(taskInfo.getReceiver().size());
-        List<String> keys = deduplicationAllKey(taskInfo);
+        List<String> keys = deduplicationAllKey(taskInfo)
+                .stream().map(key -> LIMIT_TAG + key).collect(Collectors.toList());
         Map<String, String> inRedisValue = redisUtils.mGet(keys);
 
         for (String receiver : taskInfo.getReceiver()) {
@@ -71,7 +73,7 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
     protected List<String> deduplicationAllKey(TaskInfo taskInfo) {
         List<String> result = new ArrayList<>(taskInfo.getReceiver().size());
         for (String receiver : taskInfo.getReceiver()) {
-            String key = deduplicationSingleKey(taskInfo, receiver);
+            String key = this.deduplicationSingleKey(taskInfo, receiver);
             result.add(key);
         }
         return result;
