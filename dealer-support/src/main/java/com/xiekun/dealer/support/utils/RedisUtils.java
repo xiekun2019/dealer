@@ -4,6 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -36,5 +39,26 @@ public class RedisUtils {
             log.error(TAG + "#mGet fail! e:{}", Throwables.getStackTraceAsString(e));
         }
         return result;
+    }
+
+    /**
+     * pipeline 设置 key-value 并设置过期时间
+     * @param keyValues 用于插入 redis 的 key-value 数据
+     * @param seconds 过期时间
+     */
+    public void pipelineSetExpireTime(Map<String, String> keyValues, Long seconds) {
+        try {
+            redisTemplate.executePipelined(new RedisCallback<String>() {
+                @Override
+                public String doInRedis(RedisConnection connection) throws DataAccessException {
+                    for (Map.Entry<String, String> entry : keyValues.entrySet()) {
+                        connection.setEx(entry.getKey().getBytes(), seconds, entry.getValue().getBytes());
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            log.error(TAG + "#pipelineSetExpireTime fail! e:{}", Throwables.getStackTraceAsString(e));
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.xiekun.dealer.handler.handler.deduplication.service;
 
+import cn.hutool.core.collection.CollUtil;
+import com.xiekun.dealer.common.constant.CommonConstant;
 import com.xiekun.dealer.common.domain.TaskInfo;
 import com.xiekun.dealer.handler.handler.deduplication.DeduplicationParam;
 import com.xiekun.dealer.support.utils.RedisUtils;
@@ -48,7 +50,19 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
     private void putInRedis(Map<String, String> readyToPutRedisReceiver,
                             Map<String, String> inRedisValue,
                             Long deduplicationTime) {
-
+        // 用于存储需要插入到 redis 的信息
+        Map<String, String> keyValues = new HashMap<>(readyToPutRedisReceiver.size());
+        for (Map.Entry<String, String> entry : readyToPutRedisReceiver.entrySet()) {
+            String key = entry.getValue();
+            if(Objects.nonNull(inRedisValue.get(key))) {
+                keyValues.put(key, String.valueOf(Integer.parseInt(inRedisValue.get(key)) + 1));
+            } else {
+                keyValues.put(key, String.valueOf(CommonConstant.TRUE));
+            }
+        }
+        if (CollUtil.isNotEmpty(keyValues)) {
+            redisUtils.pipelineSetExpireTime(keyValues, deduplicationTime);
+        }
     }
 
     /**
